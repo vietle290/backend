@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --inspect server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vietle290/backend.git"
+  },
+  "author": "vietle",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vietle290/backend/issues"
+  },
+  "homepage": "https://github.com/vietle290/backend#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
