@@ -17,7 +17,7 @@
     "url": "https://github.com/vietle290/backend/issues"
   },
   "homepage": "https://github.com/vietle290/backend#readme",
-  "description": "Back-end",
+  "description": "",
   "dependencies": {
     "express": "^4.21.1",
     "express-handlebars": "^8.0.1"
