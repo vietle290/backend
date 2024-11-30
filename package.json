@@ -1,10 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect server.js"
+    "start": "nodemon --inspect src/server.js",
+    "watch": "sass --watch src/resources/scss:src/public/css --no-source-map",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -16,8 +17,17 @@
     "url": "https://github.com/vietle290/backend/issues"
   },
   "homepage": "https://github.com/vietle290/backend#readme",
-  "description": "",
+  "description": "Back-end",
   "dependencies": {
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "express-handlebars": "^8.0.1"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
+    "morgan": "^1.10.0",
+    "prettier": "^3.4.1",
+    "sass": "^1.81.0",
+    "script": "^0.1.4"
   }
 }
