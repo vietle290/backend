@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "src/server.js",
   "scripts": {
+    "beautiful": "prettier --single-quote --trailing-comma all --tab-width 4 --write 'src/**/*.{js,json,scss}'",
     "start": "nodemon --inspect src/server.js",
     "watch": "sass --watch src/resources/scss:src/public/css --no-source-map",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -20,7 +21,8 @@
   "description": "",
   "dependencies": {
     "express": "^4.21.1",
-    "express-handlebars": "^8.0.1"
+    "express-handlebars": "^8.0.1",
+    "mongoose": "^8.8.3"
   },
   "devDependencies": {
     "husky": "^9.1.7",
