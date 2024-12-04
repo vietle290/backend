@@ -40,10 +40,24 @@ class CoursesController {
   }
 
   delete(req, res, next) {
+    Course.delete({ _id: req.params.id })
+     .then(() => res.redirect("back"))
+     .catch(next);
+  }
+
+  deleteForever(req, res, next) {
     Course.deleteOne({ _id: req.params.id })
      .then(() => res.redirect("back"))
      .catch(next);
   }
+
+  restore(req, res, next) {
+    Course.restore({ _id: req.params.id })
+     .then(() => res.redirect("back"))
+     .catch(next);
+  }
+
+
 
   // search(req, res) {
   //   res.render("search");

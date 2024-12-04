@@ -1,6 +1,6 @@
 <div class="mt-4">
   <h3>My Courses</h3>
-  <a href="/me/trash/courses">Recycle</a>
+  <a href="/me/stored/courses">List Courses</a>
   <table class="table mt-4">
     <thead>
       <tr>
@@ -20,16 +20,15 @@
         <td>{{this.description}}</td>
         <td>{{this.createdAt}}</td>
         <td>
-          <a href="/courses/{{this._id}}/edit" class="btn btn-primary">Edit</a>
+          <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Restore</a>
           <a href="/courses/{{this._id}}/delete" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"
-            data-target="#exampleModal">Delete</a>
+            data-target="#exampleModal">Delete Forever</a>
         </td>
       </tr>
       {{else}}
       <tr>
         <td colspan="5" class="text-center">
           No data
-          <a href="/courses/create">Create a course</a>
         </td>
       </tr>
       {{/each}}
@@ -49,7 +48,7 @@
         </button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete this course?
+        Are you sure you want to delete forever this course?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -60,13 +59,16 @@
 </div>
 
 <form name="deleteCourseForm" method="post"></form>
+<form name="restoreCourseForm" method="post"></form>
 
 <script>
   // Delete course on modal click
   document.addEventListener("DOMContentLoaded", function () {
     var courseId;
     var deleteForm = document.forms["deleteCourseForm"]
+    var restoreForm = document.forms["restoreCourseForm"]
     var btnDelete = document.getElementById("deleteModalButton")
+    var restoreBtn = $('.btn-restore')
 
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -75,9 +77,17 @@
     })
 
     btnDelete.onclick = function () {
-      deleteForm.action = "/courses/" + courseId + "?_method=DELETE";
+      deleteForm.action = "/courses/" + courseId + "/force?_method=DELETE";
       deleteForm.submit();
     }
+
+
+      restoreBtn.click(function (e) {
+        e.preventDefault();
+        var courseId = $(this).data('id');
+        restoreForm.action = "/courses/" + courseId + "/restore?_method=PATCH";
+        restoreForm.submit();
+      })
   })
 
 </script>
