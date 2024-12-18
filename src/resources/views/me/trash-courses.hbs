@@ -1,5 +1,5 @@
 <div class="mt-4">
-  <h3>My Courses</h3>
+  <h3>Recycle Courses</h3>
   <a href="/me/stored/courses">List Courses</a>
   <table class="table mt-4">
     <thead>
@@ -18,7 +18,7 @@
         <th scope="row">{{sum @index 1}}</th>
         <td>{{this.name}}</td>
         <td>{{this.description}}</td>
-        <td>{{this.createdAt}}</td>
+        <td>{{this.deletedAt}}</td>
         <td>
           <a href="" class="btn btn-primary btn-restore" data-id="{{this._id}}">Restore</a>
           <a href="/courses/{{this._id}}/delete" class="btn btn-danger" data-toggle="modal" data-id="{{this._id}}"

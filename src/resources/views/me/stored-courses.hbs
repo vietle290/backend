@@ -1,9 +1,23 @@
-<div class="mt-4">
+<form name="container-form" method="post" action="/courses/handle-form-actions" class="mt-4">
   <h3>My Courses</h3>
-  <a href="/me/trash/courses">Recycle</a>
+  <a href="/me/trash/courses">Recycle {{count}}</a>
+  <div class="mt-4 d-flex align-items-center">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" value="" id="checkAll1">
+      <label class="form-check-label" for="checkAll1">
+        Select All
+      </label>
+    </div>
+    <select class="form-control form-control-sm checkbox-select-all-options" name="action" required>
+      <option selected>Open this select menu</option>
+      <option value="delete">Delete</option>
+    </select>
+    <button class="btn btn-primary btn-sm disabled" id="check-all-submit-btn">Apply</button>
+  </div>
   <table class="table mt-4">
     <thead>
       <tr>
+        <th></th>
         <th scope="col">#</th>
         <th scope="col">Name</th>
         <th scope="col">Description</th>
@@ -14,6 +28,11 @@
     <tbody>
       {{#each courses}}
       <tr>
+        <td>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="courseIds[]" value="{{this._id}}">
+          </div>
+        </td>
         {{!-- call helper function sum --}}
         <th scope="row">{{sum @index 1}}</th>
         <td>{{this.name}}</td>
@@ -35,7 +54,7 @@
       {{/each}}
     </tbody>
   </table>
-</div>
+</form>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="#deleteModalLabel"
@@ -66,7 +85,11 @@
   document.addEventListener("DOMContentLoaded", function () {
     var courseId;
     var deleteForm = document.forms["deleteCourseForm"]
+    var containerForm = document.forms["container-form"]
     var btnDelete = document.getElementById("deleteModalButton")
+    var checkAll1 = document.getElementById("checkAll1")
+    var checkboxes = document.querySelectorAll('input[name="courseIds[]"]');
+    var checkAllApplyBtn = document.getElementById("check-all-submit-btn")
 
     $('#exampleModal').on('show.bs.modal', function (event) {
       var button = $(event.relatedTarget) // Button that triggered the modal
@@ -78,6 +101,60 @@
       deleteForm.action = "/courses/" + courseId + "?_method=DELETE";
       deleteForm.submit();
     }
+
+    checkAll1.onclick = function () {
+      for (var i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = checkAll1.checked;
+      }
+      changeApplyButton();
+    }
+    //disable checkAll1 when checkboxes are unchecked and enabled checkAll1 when all checkboxes are checked
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].onclick = function () {
+        checkAll1.checked = false;
+        changeApplyButton();
+        for (var j = 0; j < checkboxes.length; j++) {
+          if (!checkboxes[j].checked) {
+            checkAll1.checked = false;
+            changeApplyButton();
+            return;
+          }
+        }
+        checkAll1.checked = true;
+        changeApplyButton();
+      }
+    }
+
+    //prevent apply button when are disabled
+checkAllApplyBtn.onclick = function (e) {
+  e.preventDefault();
+
+  var isSubmittable = $(this).hasClass("disabled");
+  if (isSubmittable) {
+    console.log(isSubmittable);
+    
+  } else {
+    // {{ edit_1 }}: Log the selected course IDs
+    var selectedCourseIds = Array.from(checkboxes)
+      .filter(checkbox => checkbox.checked)
+      .map(checkbox => checkbox.value);
+    console.log("Selected Course IDs:", selectedCourseIds);
+    // {{ edit_2 }}: Submit the form if not disabled
+    containerForm.submit();
+  }
+}
+
+    // enable apply button when delete option or another option is selected and checkboxes length > 0 or checkAll1 is true
+    function changeApplyButton() {
+      var checkedCount = $('input[name="courseIds[]"]:checked').length;
+      if (checkedCount > 0) {
+        checkAllApplyBtn.classList.remove("disabled");
+      } else {
+        checkAllApplyBtn.classList.add("disabled");
+      } 
+    }
+    
+    
   })
 
 </script>
