@@ -19,8 +19,11 @@
       <tr>
         <th></th>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">Description</th>
+        <th scope="col">
+          Name
+        {{sortable 'name' _sort}}
+        </th>
+        <th scope="col">Description {{sortable 'description' _sort}}</th>
         <th scope="col">Timestamp</th>
         <th scope="col">Action</th>
       </tr>
@@ -132,7 +135,6 @@ checkAllApplyBtn.onclick = function (e) {
   var isSubmittable = $(this).hasClass("disabled");
   if (isSubmittable) {
     console.log(isSubmittable);
-    
   } else {
     // {{ edit_1 }}: Log the selected course IDs
     var selectedCourseIds = Array.from(checkboxes)
